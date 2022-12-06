@@ -1,0 +1,107 @@
+from tkinter import *
+from tkinter import messagebox
+
+class qlphongtro:
+    def __init__(self, sophong, tienphong, tiendien, tiennuoc, tiendichvu):
+            self.sophong = sophong
+            self.tienphong = tienphong
+            self.tiendien = tiendien
+            self.tiennuoc = tiennuoc
+            self.tiendichvu = tiendichvu    
+
+list_phongtro = []
+
+def add_sophong():
+    list_phongtro.append(qlphongtro(sophong.get(), tienphong.get(), tiendien.get(), tiennuoc.get(), tiendichvu.get()))
+    print([item.sophong for item in list_phongtro])
+    lst_danhsach.insert(END, list_phongtro[len(list_phongtro)-1].sophong + '   ' + list_phongtro[len(list_phongtro)-1].tienphong + '   ' + list_phongtro[len(list_phongtro)-1].tiendien + '   ' + list_phongtro[len(list_phongtro)-1].tiennuoc + '   ' + list_phongtro[len(list_phongtro)-1].tiennuoc 
+     + '   ' + list_phongtro[len(list_phongtro)-1].tiendichvu)
+    messagebox.showinfo("QL phòng ","Phòng số "+" "+ sophong.get() +'  '+ "đã được thêm ")
+
+def search_sophong():
+    search_sophong = check.get()
+    exist = False
+    for item in list_phongtro:
+        if item.sophong == search_sophong: 
+            exist = True  
+            messagebox.showinfo("QL phòng ", f"Phòng số {item.sophong} đã cho thuê")
+            break
+    if exist == False:
+        messagebox.showinfo("QL phòng ", f"Phòng số {search_sophong} trống ")
+
+    
+def delete_sophong():
+    delete_sophong = check.get()
+    exist = False
+    for i in range(len(list_phongtro)):
+        if list_phongtro[i].sophong == delete_sophong:
+            exist = True
+            del list_phongtro[i]
+            messagebox.showinfo("QL phòng ", f"Phòng số {delete_sophong} đã được xóa")
+            break
+        
+    if exist == False:
+        messagebox.showinfo("QL phòng ", f"Phòng số {delete_sophong} không tồn tại")
+
+def total():
+    total = int(tiendien.get()) + int(tiennuoc.get())+ int(tienphong.get())+ int(tiendichvu.get())
+    
+    messagebox.showinfo("QL phòng ", f"tổng tiền phòng là : {total} VND")
+    
+
+def reset():
+    sophong.delete(0, len(sophong.get()))
+    tienphong.delete(0, len(tienphong.get()))
+    tiendien.delete(0, len(tiendien.get()))
+    tiennuoc.delete(0, len(tiennuoc.get()))
+    tiendichvu.delete(0, len(tiendichvu.get()))
+
+window = Tk ()
+window.title ('Quản lý phòng trọ')
+
+
+danhsach_lbl = Label(window, text='THÔNG TIN ĐƯỢC LƯU')
+sophong_lbl = Label(window, text = 'Số phòng :')
+tienphong_lbl = Label(window, text = 'Tiền phòng :')
+tiendien_lbl = Label(window, text = " Tiền điện :")
+tiennuoc_lbl = Label(window, text = " Tiền nước :")
+tiendichvu_lbl = Label(window, text = "Tiền dịch vụ :")
+
+sophong = Entry(window)
+tiendien = Entry(window)
+tiennuoc = Entry(window)
+tiendichvu = Entry(window)
+tienphong = Entry(window)
+check = Entry(window)
+
+
+add_btn = Button(window, text = 'Add', command=add_sophong)
+delete_btn = Button(window, text= 'Delete', command=delete_sophong)
+total_btn = Button(window, text='Total', command=total)
+search_btn = Button(window, text ='Search  ', command=search_sophong)
+reset_btn = Button(window, text = 'Reset', command=reset)
+
+lst_danhsach = Listbox(window, selectmode=MULTIPLE, relief=SUNKEN, width=50, height=8)
+
+sophong_lbl.grid(row=0, column = 0)
+sophong.grid(row=0,column = 1 )
+tienphong_lbl.grid(row = 1 , column = 0 )
+tienphong.grid(row = 1 , column = 1 )
+tiendien_lbl.grid(row = 2 , column = 0 )
+tiendien.grid( row = 2 , column = 1 )
+tiennuoc_lbl.grid( row = 3 , column = 0 )
+tiennuoc.grid(row = 3 , column = 1 )
+tiendichvu_lbl.grid( row = 4 , column = 0 )
+tiendichvu.grid( row = 4 , column = 1)
+
+add_btn.grid(row = 6 , column = 1 )
+delete_btn.grid(row = 6 , column = 2 )
+total_btn.grid(row = 6 , column = 0 )
+search_btn.grid(row = 8 , column = 0 )
+check.grid ( row = 8 , column = 1 )
+reset_btn.grid (row = 9 , column = 1 )
+
+danhsach_lbl.place(x=170, y=200)
+lst_danhsach.place(x=90, y=230)
+
+window.mainloop()
